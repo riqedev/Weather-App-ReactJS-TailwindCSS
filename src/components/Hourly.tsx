@@ -117,7 +117,7 @@ export function Hourly({ data }: { data: Forecast }) {
             {hover !== null && (
               <g className="pointer-events-none">
                 <line x1={cx(hover)} x2={cx(hover)} y1={8} y2={TEMP_H + RAIN_H + 8} className="stroke-foreground/30" />
-                <circle cx={cx(hover)} cy={ty(hours[hover].temp)} r={4.5} className="fill-series-temp stroke-card" strokeWidth={2} />
+                <circle cx={cx(hover)} cy={ty(hours[hover].temp)} r={4.5} className="fill-series-temp stroke-black/40" strokeWidth={2} />
               </g>
             )}
 

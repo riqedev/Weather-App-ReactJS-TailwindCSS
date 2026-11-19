@@ -36,12 +36,12 @@ export function Daily({ data }: { data: Forecast }) {
               </span>
               <span className="relative h-1.5 rounded-full bg-foreground/10" aria-hidden="true">
                 <span
-                  className="absolute inset-y-0 rounded-full bg-foreground/60"
+                  className="absolute inset-y-0 rounded-full bg-linear-to-r from-series-rain to-series-temp"
                   style={{ left: `${pct(d.min)}%`, width: `${Math.max(4, pct(d.max) - pct(d.min))}%` }}
                 />
                 {i === 0 && (
                   <span
-                    className="absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground ring-2 ring-card"
+                    className="absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white ring-2 ring-black/40"
                     style={{ left: `${pct(Math.min(d.max, Math.max(d.min, data.current.temp)))}%` }}
                   />
                 )}

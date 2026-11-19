@@ -1,111 +1,60 @@
 @import "tailwindcss";
 @import "@fontsource-variable/inter/opsz.css";
-@import "@fontsource-variable/archivo/wdth.css";
-@import "@fontsource-variable/jetbrains-mono/wght.css";
 
-/* El tema sigue al sistema. Neutros de la marca riqedev; colores de datos validados para daltonismo. */
-@custom-variant dark (@media (prefers-color-scheme: dark));
-
+/*
+ * RIQE Weather no usa la paleta neutra de la marca: como toda app de clima, el fondo es el cielo
+ * (ver src/lib/sky.ts) y la interfaz va en blanco sobre tarjetas de vidrio oscuro. La marca solo
+ * aparece en el pie ("Hecho por riqedev").
+ */
 @theme inline {
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-brand: "Archivo Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-ring: var(--ring);
-  --color-hud: var(--hud);
-  --color-hud-faint: var(--hud-faint);
+  --color-glass: var(--glass);
+  --color-popover: var(--popover);
 
-  /* Datos */
   --color-series-temp: var(--series-temp);
   --color-series-rain: var(--series-rain);
   --color-blue-hour: var(--blue-hour);
   --color-golden-hour: var(--golden-hour);
   --color-grid: var(--grid);
   --color-axis: var(--axis);
-  --color-band: var(--band);
-  --color-status-good: var(--status-good);
-  --color-status-warning: var(--status-warning);
-  --color-status-critical: var(--status-critical);
-  --color-good-text: var(--good-text);
 
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 :root {
-  color-scheme: light;
-  --background: oklch(0.985 0.002 264);
-  --foreground: oklch(0.16 0 0);
-  --card: oklch(1 0 0);
-  --muted: oklch(0.96 0 0);
-  --muted-foreground: oklch(0.48 0 0);
-  --border: oklch(0.9 0 0);
-  --ring: oklch(0.45 0 0);
-  --hud: oklch(0.16 0 0 / 60%);
-  --hud-faint: oklch(0.16 0 0 / 45%);
-  --shadow-card: 0 1px 2px oklch(0 0 0 / 4%), 0 14px 32px -18px oklch(0 0 0 / 16%);
+  color-scheme: dark;
+  --foreground: #ffffff;
+  --muted-foreground: rgb(255 255 255 / 0.78);
+  --border: rgb(255 255 255 / 0.16);
+  --ring: rgb(255 255 255 / 0.7);
+  /* Vidrio oscuro: oscurece el cielo lo justo para que el texto blanco se lea en cualquier fondo. */
+  --glass: rgb(8 16 28 / 0.26);
+  --popover: rgb(16 26 40 / 0.96);
 
-  --series-temp: #eb6834;
-  --series-rain: #2a78d6;
-  --blue-hour: #2a78d6;
-  --golden-hour: #eda100;
-  --grid: #e1e0d9;
-  --axis: #c3c2b7;
-  --band: oklch(0.16 0 0 / 5%);
-  --status-good: #0ca30c;
-  --status-warning: #fab219;
-  --status-critical: #d03b3b;
-  --good-text: #006300;
-
+  /* Datos: claros y saturados sobre cielo de tono medio (validados para daltonismo y contraste). */
+  --series-temp: #ffc85a;
+  --series-rain: #6cbcff;
+  --blue-hour: #8fa5ff;
+  --golden-hour: #ffc24d;
+  --grid: rgb(255 255 255 / 0.12);
+  --axis: rgb(255 255 255 / 0.3);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.19 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.72 0 0);
-    --border: oklch(1 0 0 / 10%);
-    --ring: oklch(0.72 0 0);
-    --hud: oklch(0.985 0 0 / 58%);
-    --hud-faint: oklch(0.985 0 0 / 42%);
-    --shadow-card: inset 0 1px 0 0 oklch(1 0 0 / 6%), 0 18px 40px -22px oklch(0 0 0 / 75%);
-
-    --series-temp: #d95926;
-    --series-rain: #3987e5;
-    --blue-hour: #3987e5;
-    --golden-hour: #c98500;
-    --grid: #2c2c2a;
-    --axis: #383835;
-    --band: oklch(1 0 0 / 5%);
-    --good-text: #0ca30c;
-
-  }
-}
-
-@utility osd {
-  font-family: var(--font-brand);
-  font-stretch: 84%;
-  font-weight: 540;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
+/* Tarjeta de vidrio. Sin sombra pesada: sobre un degradado de cielo, la sombra ensucia. */
 @utility surface {
-  background-color: var(--card);
-  box-shadow: var(--shadow-card);
+  background-color: var(--glass);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
 }
 
 @utility pressable {
-  transition-property: transform, color, background-color, border-color, opacity, box-shadow;
+  transition-property: transform, color, background-color, border-color, opacity;
   transition-duration: 160ms;
   transition-timing-function: var(--ease-out);
   &:active {
@@ -113,12 +62,26 @@
   }
 }
 
+html {
+  background-color: #1d3a5f;
+}
+
 body {
-  background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   font-feature-settings: "tnum";
   -webkit-font-smoothing: antialiased;
+}
+
+/* El cielo cambia de color con una transición lenta al cambiar de ciudad, no de golpe. */
+.sky {
+  transition: background 600ms var(--ease-out);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass: rgb(8 16 28 / 0.6);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -129,4 +92,3 @@ body {
     animation-duration: 0ms !important;
   }
 }
-

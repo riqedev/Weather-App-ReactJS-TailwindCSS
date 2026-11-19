@@ -9,7 +9,8 @@ Pronóstico del tiempo con un agregado para fotografía: **horas doradas y azule
 - **Próximas 24 horas:** temperatura y probabilidad de lluvia en dos gráficos alineados (mismo eje de horas, cada uno con su escala).
 - **Próximos 7 días:** mínima y máxima con barras de rango en una escala común.
 - **Luz para fotografía:** línea del día con noche, hora azul (sol entre −6° y −4°), hora dorada (−4° a 6°) y día, para hoy y mañana. Cada ventana trae la nubosidad pronosticada y una lectura simple: despejado, nubes parciales (buena chance de color), cubierto o lluvia probable.
-- Español e inglés, tema claro y oscuro según el sistema.
+- **El fondo es el cielo:** cambia según el tiempo actual (despejado, nublado, niebla, lluvia, nieve, tormenta), si es de día o de noche y si la ciudad está en hora dorada. Las tarjetas son de vidrio oscuro para que el texto blanco se lea sobre cualquier cielo.
+- Español e inglés.
 
 ## Cómo funciona
 

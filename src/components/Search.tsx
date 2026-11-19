@@ -79,7 +79,7 @@ export function Search({ onPick }: { onPick: (p: Place) => void }) {
     <div ref={wrap} className="relative w-full sm:max-w-md">
       <div className="flex items-center gap-2">
         <div className="relative flex-1">
-          <SearchIcon size={16} aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground" />
+          <SearchIcon size={16} aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3 z-10 -translate-y-1/2 text-muted-foreground" />
           <input
             type="search"
             role="combobox"
@@ -109,10 +109,10 @@ export function Search({ onPick }: { onPick: (p: Place) => void }) {
                 setOpen(false);
               }
             }}
-            className="h-10 w-full rounded-lg border border-border bg-card pr-9 pl-9 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/60"
+            className="h-10 w-full rounded-lg border border-border bg-glass pr-9 pl-9 backdrop-blur-md text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring/60"
           />
           {loading && (
-            <LoaderCircle size={15} aria-hidden="true" className="absolute top-1/2 right-3 -translate-y-1/2 animate-spin text-muted-foreground" />
+            <LoaderCircle size={15} aria-hidden="true" className="absolute top-1/2 right-3 z-10 -translate-y-1/2 animate-spin text-muted-foreground" />
           )}
         </div>
         <button
@@ -121,7 +121,7 @@ export function Search({ onPick }: { onPick: (p: Place) => void }) {
           disabled={locating}
           aria-label={t.myLocation}
           title={t.myLocation}
-          className="pressable grid size-10 shrink-0 place-items-center rounded-lg border border-border text-muted-foreground outline-none hover:border-foreground/40 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 disabled:opacity-60"
+          className="pressable grid size-10 shrink-0 place-items-center rounded-lg border border-border bg-glass text-muted-foreground backdrop-blur-md outline-none hover:border-foreground/40 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 disabled:opacity-60"
         >
           {locating ? <LoaderCircle size={16} aria-hidden="true" className="animate-spin" /> : <LocateFixed size={16} aria-hidden="true" />}
         </button>
@@ -132,7 +132,7 @@ export function Search({ onPick }: { onPick: (p: Place) => void }) {
           id={`${id}-list`}
           role="listbox"
           aria-label={t.search}
-          className="absolute inset-x-0 top-full z-40 mt-1.5 overflow-hidden rounded-lg border border-border bg-card py-1 shadow-xl"
+          className="absolute inset-x-0 top-full z-40 mt-1.5 overflow-hidden rounded-lg border border-border bg-popover py-1 shadow-xl shadow-black/30"
         >
           {results.length === 0 ? (
             <li className="px-3 py-2.5 text-sm text-muted-foreground">{t.noResults}</li>
@@ -145,7 +145,7 @@ export function Search({ onPick }: { onPick: (p: Place) => void }) {
                 aria-selected={i === active}
                 onPointerEnter={() => setActive(i)}
                 onClick={() => pick(p)}
-                className={cn("flex cursor-pointer items-center gap-2.5 px-3 py-2 text-sm", i === active && "bg-muted")}
+                className={cn("flex cursor-pointer items-center gap-2.5 px-3 py-2 text-sm", i === active && "bg-white/12")}
               >
                 <MapPin size={14} aria-hidden="true" className="shrink-0 text-muted-foreground" />
                 <span className="truncate">{placeLabel(p)}</span>

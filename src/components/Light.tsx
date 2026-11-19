@@ -8,10 +8,10 @@ import { useLocale, useT } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 
 const PHASE_CLASS: Record<Phase, string> = {
-  night: "bg-foreground/15",
+  night: "bg-black/35",
   blue: "bg-blue-hour",
   golden: "bg-golden-hour",
-  day: "bg-foreground/5",
+  day: "bg-white/20",
 };
 
 export function Light({ data, lat, lon }: { data: Forecast; lat: number; lon: number }) {
@@ -49,7 +49,7 @@ export function Light({ data, lat, lon }: { data: Forecast; lat: number; lon: nu
               onClick={() => setWhich(i as 0 | 1)}
               className={cn(
                 "pressable h-8 rounded-md px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/60",
-                which === i ? "bg-foreground text-background" : "text-muted-foreground hover:text-foreground",
+                which === i ? "bg-white text-[#0f1b2b]" : "text-muted-foreground hover:text-foreground",
               )}
             >
               {label}
@@ -64,12 +64,12 @@ export function Light({ data, lat, lon }: { data: Forecast; lat: number; lon: nu
           {spans.map((s) => (
             <span
               key={`${s.phase}-${s.from}`}
-              className={cn("h-full border-r-2 border-card last:border-r-0", PHASE_CLASS[s.phase])}
+              className={cn("h-full border-r-2 border-transparent last:border-r-0", PHASE_CLASS[s.phase])}
               style={{ width: `${((s.to - s.from) / 1440) * 100}%` }}
             />
           ))}
           {nowMin !== null && (
-            <span aria-hidden="true" className="absolute inset-y-0 w-0.5 bg-foreground" style={{ left: `${(nowMin / 1440) * 100}%` }} />
+            <span aria-hidden="true" className="absolute inset-y-0 w-0.5 bg-white shadow-[0_0_0_1px_rgb(0_0_0/0.35)]" style={{ left: `${(nowMin / 1440) * 100}%` }} />
           )}
         </div>
         <div className="mt-1.5 flex justify-between text-[10px] text-muted-foreground tabular-nums">

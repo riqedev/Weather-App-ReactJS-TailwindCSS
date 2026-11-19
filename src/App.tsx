@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { LoaderCircle, RotateCw } from "lucide-react";
-import { DEFAULT_PLACE, fetchForecast, type Forecast, type Place } from "@/lib/weather";
+import { DEFAULT_PLACE, fetchForecast, midnightUtc, type Forecast, type Place } from "@/lib/weather";
+import { LOADING_SKY, skyGradient } from "@/lib/sky";
+import { lightWindows } from "@/lib/sun";
 import { COPY, LOCALE_STORAGE_KEY, LocaleContext, detectLocale, type Locale } from "@/lib/i18n";
 import { Search } from "@/components/Search";
 import { Current } from "@/components/Current";
@@ -55,6 +57,20 @@ export default function App() {
     return () => ctrl.abort();
   }, [place, attempt]);
 
+  // El fondo es el cielo de la ciudad elegida: tiempo actual, día o noche, y hora dorada si toca.
+  const sky = (() => {
+    if (state.status !== "ready") return LOADING_SKY;
+    const { data, place: p } = state;
+    const w = lightWindows(midnightUtc(data.daily[0].date, data.offset), p.lat, p.lon);
+    const now = (data.current.wall / 60_000) % 1440;
+    const golden = [w.morningGolden, w.eveningGolden].some((g) => g && now >= g[0] && now < g[1]);
+    return skyGradient(data.current.code, data.current.isDay, golden);
+  })();
+
+  useEffect(() => {
+    document.querySelector('meta[name="theme-color"]')?.setAttribute("content", sky[0]);
+  }, [sky]);
+
   const choose = (p: Place) => {
     setState({ status: "loading" });
     setPlace(p);
@@ -67,6 +83,7 @@ export default function App() {
 
   return (
     <LocaleContext.Provider value={{ locale, setLocale }}>
+      <div className="sky min-h-dvh" style={{ background: `linear-gradient(180deg, ${sky[0]} 0%, ${sky[1]} 100%)` }}>
       <div className="mx-auto flex min-h-dvh max-w-7xl flex-col gap-5 px-4 py-5 sm:gap-6 sm:px-8 sm:py-8">
         <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-start justify-between gap-4">
@@ -78,7 +95,7 @@ export default function App() {
               type="button"
               onClick={() => setLocale(locale === "es" ? "en" : "es")}
               aria-label={t.switchTo}
-              className="osd pressable h-9 rounded-lg px-3 text-[11px] text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 sm:hidden"
+              className="pressable h-9 rounded-lg px-3 text-xs font-medium tracking-wide text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 sm:hidden"
             >
               {locale.toUpperCase()}
             </button>
@@ -89,7 +106,7 @@ export default function App() {
               type="button"
               onClick={() => setLocale(locale === "es" ? "en" : "es")}
               aria-label={t.switchTo}
-              className="osd pressable hidden h-10 rounded-lg px-3 text-[11px] text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 sm:block"
+              className="pressable hidden h-10 rounded-lg px-3 text-xs font-medium tracking-wide text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/60 sm:block"
             >
               {locale.toUpperCase()}
             </button>
@@ -150,6 +167,7 @@ export default function App() {
             </a>
           </span>
         </footer>
+      </div>
       </div>
     </LocaleContext.Provider>
   );

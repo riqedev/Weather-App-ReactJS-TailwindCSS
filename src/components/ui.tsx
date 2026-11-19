@@ -27,7 +27,7 @@ export function Tooltip({ x, y, children }: { x: number; y: number; children: Re
   return (
     <div
       role="status"
-      className="pointer-events-none absolute z-20 min-w-36 -translate-x-1/2 -translate-y-full rounded-lg border border-border bg-card px-3 py-2 text-xs shadow-lg"
+      className="pointer-events-none absolute z-20 min-w-36 -translate-x-1/2 -translate-y-full rounded-lg border border-border bg-popover px-3 py-2 text-xs shadow-lg shadow-black/30"
       style={{ left: x, top: y - 10 }}
     >
       {children}
