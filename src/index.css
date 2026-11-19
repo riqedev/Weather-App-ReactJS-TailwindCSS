@@ -1,15 +1,132 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@fontsource-variable/inter/opsz.css";
+@import "@fontsource-variable/archivo/wdth.css";
+@import "@fontsource-variable/jetbrains-mono/wght.css";
 
+/* El tema sigue al sistema. Neutros de la marca riqedev; colores de datos validados para daltonismo. */
+@custom-variant dark (@media (prefers-color-scheme: dark));
 
+@theme inline {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-brand: "Archivo Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-body {
-    font-family: 'Lexend', sans-serif;
-  }
-h1 {
-    font-weight: bold;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-hud: var(--hud);
+  --color-hud-faint: var(--hud-faint);
+
+  /* Datos */
+  --color-series-temp: var(--series-temp);
+  --color-series-rain: var(--series-rain);
+  --color-blue-hour: var(--blue-hour);
+  --color-golden-hour: var(--golden-hour);
+  --color-grid: var(--grid);
+  --color-axis: var(--axis);
+  --color-band: var(--band);
+  --color-status-good: var(--status-good);
+  --color-status-warning: var(--status-warning);
+  --color-status-critical: var(--status-critical);
+  --color-good-text: var(--good-text);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-  
+:root {
+  color-scheme: light;
+  --background: oklch(0.985 0.002 264);
+  --foreground: oklch(0.16 0 0);
+  --card: oklch(1 0 0);
+  --muted: oklch(0.96 0 0);
+  --muted-foreground: oklch(0.48 0 0);
+  --border: oklch(0.9 0 0);
+  --ring: oklch(0.45 0 0);
+  --hud: oklch(0.16 0 0 / 60%);
+  --hud-faint: oklch(0.16 0 0 / 45%);
+  --shadow-card: 0 1px 2px oklch(0 0 0 / 4%), 0 14px 32px -18px oklch(0 0 0 / 16%);
+
+  --series-temp: #eb6834;
+  --series-rain: #2a78d6;
+  --blue-hour: #2a78d6;
+  --golden-hour: #eda100;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --band: oklch(0.16 0 0 / 5%);
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-critical: #d03b3b;
+  --good-text: #006300;
+
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.19 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.72 0 0);
+    --border: oklch(1 0 0 / 10%);
+    --ring: oklch(0.72 0 0);
+    --hud: oklch(0.985 0 0 / 58%);
+    --hud-faint: oklch(0.985 0 0 / 42%);
+    --shadow-card: inset 0 1px 0 0 oklch(1 0 0 / 6%), 0 18px 40px -22px oklch(0 0 0 / 75%);
+
+    --series-temp: #d95926;
+    --series-rain: #3987e5;
+    --blue-hour: #3987e5;
+    --golden-hour: #c98500;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --band: oklch(1 0 0 / 5%);
+    --good-text: #0ca30c;
+
+  }
+}
+
+@utility osd {
+  font-family: var(--font-brand);
+  font-stretch: 84%;
+  font-weight: 540;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@utility surface {
+  background-color: var(--card);
+  box-shadow: var(--shadow-card);
+}
+
+@utility pressable {
+  transition-property: transform, color, background-color, border-color, opacity, box-shadow;
+  transition-duration: 160ms;
+  transition-timing-function: var(--ease-out);
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "tnum";
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
 

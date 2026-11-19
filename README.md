@@ -1,30 +1,31 @@
-# Weather App 🌤️
+# RIQE Weather
 
-Aplicación del clima construida utilizando ReactJS y Tailwind CSS. Proporciona a los usuarios información del clima en tiempo real utilizando la API de OpenWeatherMap.
+Pronóstico del tiempo con un agregado para fotografía: **horas doradas y azules** calculadas con la posición del sol, y la **nubosidad pronosticada en cada una** para saber qué luz esperar.
 
-La aplicación está diseñada para ser responsive, asegurando una experiencia fluida en diferentes dispositivos, incluyendo ordenadores de escritorio y móviles. En pantallas de escritorio, el contenido se muestra centrado dentro del div principal, creando un diseño limpio y organizado. Cuando se visualiza en dispositivos móviles, la aplicación se ajusta a una pantalla completa sin espacios adicionales, permitiendo a los usuarios ver la información del clima de manera más conveniente.
-![View_APP](https://i.imgur.com/TP7eZd2.png)
+## Qué hace
 
-Al integrar la API de OpenWeatherMap,  garantiza información del clima confiable y actualizada, permitiendo a los usuarios planificar sus actividades de manera adecuada y mantenerse informados sobre las condiciones climáticas actuales.
+- **Búsqueda de ciudades** con autocompletado (teclado completo: ↑/↓, Enter, Esc) o **tu ubicación** con la geolocalización del navegador. Recuerda la última ciudad.
+- **Condiciones actuales:** temperatura y sensación térmica, humedad, viento con dirección y ráfagas, precipitación, índice UV, nubosidad y visibilidad.
+- **Próximas 24 horas:** temperatura y probabilidad de lluvia en dos gráficos alineados (mismo eje de horas, cada uno con su escala).
+- **Próximos 7 días:** mínima y máxima con barras de rango en una escala común.
+- **Luz para fotografía:** línea del día con noche, hora azul (sol entre −6° y −4°), hora dorada (−4° a 6°) y día, para hoy y mañana. Cada ventana trae la nubosidad pronosticada y una lectura simple: despejado, nubes parciales (buena chance de color), cubierto o lluvia probable.
+- Español e inglés, tema claro y oscuro según el sistema.
 
-Siéntete libre de personalizar y mejorar la app de acuerdo a tus requerimientos y preferencias específicas. 
+## Cómo funciona
 
-### Instalación 🔧
+- Datos de [Open-Meteo](https://open-meteo.com/) (pronóstico y geocodificación): gratis, **sin API key** y con CORS abierto. Todo corre en el navegador; no hay backend ni secretos.
+- La elevación solar se calcula en `src/lib/sun.ts` con la aproximación del NOAA. Los tests la comparan con la salida y puesta del sol que entrega Open-Meteo (±3 min en Temuco y Reikiavik).
 
-#### Descarga de repositorios ✨
+## Stack
 
-A través del siguiente comando es posible descargar el repositorio con el siguiente comando:
+React 19 · TypeScript · Vite 8 · Tailwind CSS 4 · gráficos en SVG propio
 
+## Desarrollo
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm test         # node --test: posición del sol y ventanas de luz
+npm run build    # tsc + vite build → dist/
+npm run lint
 ```
-git clone https://github.com/LILEnrique/Weather-App-ReactJS-TailwindCSS
-```
-#### Configuración de variables de entorno ⌨️
-Para configurar las variables de entorno de este proyecto basta con crear el archivo con el nombre “.env” en la carpeta raíz del proyecto con los siguientes datos:
-
-```
-REACT_APP_API_KEY=
-REACT_APP_URL=https://api.openweathermap.org/data/2.5/forecast?
-```
-Nota: Debes ingresar la API Key proporcionada por OpenWeatherMap
-
-Desarrollado con ❤️ por [LILEnrique](https://github.com/LILEnrique) 😼
